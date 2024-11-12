@@ -1,4 +1,12 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<b>Tervetuloa</b> <i>sovellukseen</i>!
-<img src="/static/alien.gif">
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
+<hr>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="{{ url_for('login') }}">Kirjautuminen</a>
+
+{% endif %}
+{% endblock %}

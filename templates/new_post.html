@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Lisää video{% endblock %}
+{% block content %}
+<h2>Lisää video</h2>
+<form action="/new_post" method="POST">
+    Link:
+    <textarea name="link" rows="1" cols="40"></textarea>
+    <br>
+    
+    Comment:
+    <textarea name="content" rows="2" cols="40"></textarea>
+    <br>
+
+    <input type="submit" value="Lähetä">
+</form>
+
+{% endblock %}
