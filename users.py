@@ -25,7 +25,7 @@ def user_id():
     return session.get("user_id", 0)
 
 def logout():
-    del session["user_id"]
+    session.pop("user_id", None)
 
 def register(username, password):
     hash_value = generate_password_hash(password)

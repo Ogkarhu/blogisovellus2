@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template, request, session, redirect
 from app import app
 from db import db
+from sqlalchemy.sql import text
 
 @app.route("/new_post", methods=["POST", "GET"])
 def new_post():

@@ -38,5 +38,5 @@ def index():
 
 @app.route("/logout")
 def logout():
-    del session["user_id"]
-    return redirect("/")
+    users.logout()
+    return render_template("login.html")
