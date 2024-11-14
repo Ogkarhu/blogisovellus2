@@ -4,6 +4,10 @@ from flask import render_template, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import users
+import new_post
+import posts
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -34,9 +38,15 @@ def register():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    post_list= posts.get_list()
+    print(post_list)
+    return render_template("index.html", posts=post_list)
 
 @app.route("/logout")
 def logout():
     users.logout()
     return render_template("login.html")
+
+@app.route("/new_post")
+def new_post_route():
+    new_post()

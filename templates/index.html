@@ -4,9 +4,30 @@
 <hr>
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/new_post">Lisää video</a>
 <a href="/logout">Kirjaudu ulos</a>
+
+<hr>
+
+{% for post in posts %}
+    <!--displaying the date-->
+    {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
+
+    <!--embedding video-->
+    {% if post.youtube_url %}
+        <iframe width="560" height="315"
+            src="{{ post.youtube_url }}"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+        </iframe>
+    {% endif %}
+
+    <p>{{ post.body}}</p>
+    <br>
+    {% endfor %}
+
+    
 {% else %}
 <a href="{{ url_for('login') }}">Kirjautuminen</a>
-
 {% endif %}
+
 {% endblock %}

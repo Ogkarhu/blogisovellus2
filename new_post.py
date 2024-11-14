@@ -4,8 +4,10 @@ from app import app
 from db import db
 from sqlalchemy.sql import text
 
+
+
 @app.route("/new_post", methods=["POST", "GET"])
-def new_post():
+def add_video():
     if request.method == "GET":
         return render_template("new_post.html")
     
@@ -24,11 +26,11 @@ def new_post():
         unique = link.split("youtu.be/")[1]
         youtube_url = f"https://www.youtube.com/embed/{unique}"
     else:
-        return redirect("/index")
+        return redirect("/")
 
     # Insert post (comment and YouTube link) into the database
-    query = text("INSERT INTO posts (breadtext, youtube_url) VALUES (:content, :youtube_url)")
-    db.session.execute(query, {"content": content, "youtube_url": youtube_url})
+    query = text("INSERT INTO posts (user_id, body, youtube_url) VALUES (:user_id, :content, :youtube_url)")
+    db.session.execute(query, {"user_id": session["user_id"], "content": content, "youtube_url": youtube_url})
     db.session.commit()
 
-    return redirect("/index")
+    return redirect("/")
