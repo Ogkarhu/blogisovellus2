@@ -6,6 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import users
 import new_post
 import posts
+import comments
+import new_comment
 
 
 
@@ -32,21 +34,28 @@ def register():
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1):
-            return redirect("/")
+            return redirect("/login")
         else:
             return render_template("error.html", message="Rekisteröinti ei onnistunut")
 
 @app.route("/")
 def index():
     post_list= posts.get_list()
-    print(post_list)
-    return render_template("index.html", posts=post_list)
+    post_and_comment=[]
+    for post in post_list:
+        post_dict = dict(post._mapping)
+        comment_list= comments.get_list(post_dict["id"])
+        post_dict["comments"] = comment_list
+        post_and_comment.append(post_dict)
+    print(post_and_comment)
+    return render_template("index.html", posts=post_and_comment)
 
 @app.route("/logout")
 def logout():
     users.logout()
     return render_template("login.html")
 
-@app.route("/new_post")
-def new_post_route():
-    new_post()
+@app.route("/new_comment")
+def new_comment_route():
+    new_comment.add_comment()
+    return render_template("/")
