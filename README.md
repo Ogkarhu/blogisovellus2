@@ -12,12 +12,33 @@ Molemmissa malleissa sovellus pitää kirjaa käyttäjien tykkäyksistä, kommen
 Testausohjeet
 
 
-- Aluksi kloonaa repositorio ```git clone https://github.com/Ogkarhu/blogisovellus2.git```
+- Aluksi kloonaa repositorio 
+```
+git clone https://github.com/Ogkarhu/blogisovellus2.git
+```
 - Avaa kohdekansio (cd)
-- Testataksesi sovellusta sinun täytyy asentaa esivaatimukset ```pip install -r requirements.txt```
-- Rakenna virtuaaliympäristö ```python3 -m venv venv```
-- Avaa virtuaaliympäristö ```source venv/bin/activate```
-- Avaa tietokanta uuteen terminaali-ikkunaan ```Start-pg.sh```
-- Luo tietokanta ajamalla uudessa terminaali-ikkunassa ```schema.sql psql < schema.sql```
-- Käynnistä uuteen ikkunaan paikallinen sovellus ```flask run --debug```
+- Testataksesi sovellusta sinun täytyy asentaa esivaatimukset 
+```
+pip install -r requirements.txt
+```
+- Rakenna virtuaaliympäristö 
+```
+python3 -m venv venv
+```
+- Avaa virtuaaliympäristö 
+```
+source venv/bin/activate
+```
+- Avaa tietokanta uuteen terminaali-ikkunaan 
+```
+Start-pg.sh
+```
+- Luo tietokanta ajamalla uudessa terminaali-ikkunassa 
+```
+schema.sql psql < schema.sql
+```
+- Käynnistä uuteen ikkunaan paikallinen sovellus 
+```
+flask run --debug
+```
 - Voit avata sivuston selaimessa http://localhost:5000/
