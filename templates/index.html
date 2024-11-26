@@ -4,7 +4,9 @@
 <hr>
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/new_post">Lisää video</a>
+    {% if session.is_admin == True %}
+    <a href="/new_post">Lisää video</a>
+    {% endif %}
 <a href="/logout">Kirjaudu ulos</a>
 
 <hr>
