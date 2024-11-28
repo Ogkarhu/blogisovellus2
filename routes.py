@@ -8,8 +8,7 @@ import new_post
 import posts
 import comments
 import new_comment
-
-
+import like
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -60,3 +59,8 @@ def logout():
 def new_comment_route():
     new_comment.add_comment()
     return render_template("/")
+
+@app.route("/like", methods =["POST"])
+def like_route():
+    like.like()
+    return redirect("/")

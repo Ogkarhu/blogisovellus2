@@ -14,7 +14,11 @@
 {% for post in posts %}
     <!--displaying the date-->
     {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
-
+    <br>
+    Pidän!:<form action="/like" method="POST">
+        <input type="hidden" value="{{post.id}}" name = "post_id"/>
+        <input type="submit" value="{{post.likes}}" />
+    </form>
     <!--embedding video-->
     {% if post.youtube_url %}
         <iframe width="560" height="315"
