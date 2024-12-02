@@ -41,14 +41,8 @@ def register():
 @app.route("/")
 def index():
     post_list= posts.get_list()
-    post_and_comment=[]
-    for post in post_list:
-        post_dict = dict(post._mapping)
-        comment_list= comments.get_list(post_dict["id"])
-        post_dict["comments"] = comment_list
-        post_and_comment.append(post_dict)
-    print(post_and_comment)
-    return render_template("index.html", posts=post_and_comment)
+    print(post_list)
+    return render_template("index.html", posts=post_list)
 
 @app.route("/logout")
 def logout():
@@ -59,8 +53,14 @@ def logout():
 def new_comment_route():
     new_comment.add_comment()
     return render_template("/")
-
 @app.route("/like", methods =["POST"])
 def like_route():
     like.like()
     return redirect("/")
+
+@app.route("/follows")
+def follow_route():
+    if request.method == "POST":
+        return redirect("/")
+    if request.method == "GET":
+        return render_template("followed.html")

@@ -12,11 +12,10 @@ def like():
     
     if request.method == "POST":
         post_id = request.form["post_id"]
-        print(request.form)
 
         check = text("SELECT EXISTS(SELECT FROM likes WHERE user_id = :user_id AND post_id = :post_id )")
-        molbo = db.session.execute(check, {"user_id": session["user_id"], "post_id": post_id}).fetchone()
-        if not molbo[0]:
+        liked = db.session.execute(check, {"user_id": session["user_id"], "post_id": post_id}).fetchone()
+        if not liked[0]:
             query = text("INSERT INTO likes (user_id, post_id) VALUES (:user_id, :post_id)")
             db.session.execute(query, {"user_id": session["user_id"], "post_id": post_id})
             db.session.commit()

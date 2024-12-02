@@ -29,7 +29,6 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE likes (
-    likes BOOLEAN DEFAULT FALSE,
     user_id INTEGER REFERENCES users(id),
     post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE
 );

@@ -8,15 +8,18 @@
     <a href="/new_post">Lisää video</a>
     {% endif %}
 <a href="/logout">Kirjaudu ulos</a>
+<a href="/follows">Käyttäjät</a>
 
 <hr>
 
 {% for post in posts %}
     <!--displaying the date-->
     {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
+    <!--displaying the user-->
+    Posted by {{post.username}}
     <br>
     Pidän!:<form action="/like" method="POST">
-        <input type="hidden" value="{{post.id}}" name = "post_id"/>
+        <input type="hidden" value="{{post[0]}}" name = "post_id"/>
         <input type="submit" value="{{post.likes}}" />
     </form>
     <!--embedding video-->
@@ -30,12 +33,12 @@
     <p>{{ post.body}}</p>
     <br>
     <form action="/new_comment" method="POST">
-        <input type="hidden" value="{{post.id}}" name = "post_id"/>
+        <input type="hidden" value="{{post[0]}}" name = "post_id"/>
         <textarea name="comment" rows="2" cols="40"></textarea>
         <input type="submit" value="Lähetä">
     </form>
     {%for comment in post.comments %}
-        {{comment.comment}}
+        {{comment[1]}}
         <br>
     {% endfor %}
     <hr>
