@@ -63,4 +63,5 @@ def follow_route():
     if request.method == "POST":
         return redirect("/")
     if request.method == "GET":
-        return render_template("followed.html")
+        all_users = users.userlist()
+        return render_template("followed.html", users= all_users)

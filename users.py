@@ -39,3 +39,10 @@ def register(username, password, admin):
         return False
     return login(username, password)
 
+def userlist():
+    user = user_id()
+    sql = text("SELECT username, id FROM users WHERE users.id <> :user")
+    all_users = db.session.execute(sql, {"user" :user})
+    return all_users
+
+

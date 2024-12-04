@@ -2,13 +2,14 @@
 {% block title %}Seuratut{% endblock %}
 {% block content %}
 <h2>Seurattavat</h2>
-{%for username in users.username%}
-    {{username}} <form action="/follows" method="POST">
+{%for user in users%}
+{{user.username}}
+
+    <!-- {{username}} <form action="/follows" method="POST">
                 <input type = "hidden" value="{{username}}" name="username">
                 <input type = "submit" value= "seuraa">
-                </form>
+                </form> -->
 
-<a href="/register">uusi käyttäjä</a>
 {%endfor%}
 {{follows}}
 {% endblock %}
