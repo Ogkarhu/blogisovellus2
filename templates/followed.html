@@ -1,15 +1,25 @@
 {% extends "layout.html" %}
 {% block title %}Seuratut{% endblock %}
 {% block content %}
-<h2>Seurattavat</h2>
+<h2>Seuraa näitä blogaajia</h2>
 {%for user in users%}
-{{user.username}}
+    {%if user.is_admin%}
+        {{user.username}}
 
-    <!-- {{username}} <form action="/follows" method="POST">
-                <input type = "hidden" value="{{username}}" name="username">
-                <input type = "submit" value= "seuraa">
-                </form> -->
+        <form action="/follows" method="POST">
+        <input type = "hidden" value="{{user.username}}" name="username">
+        <input type = "hidden" value="{{user.id}}" name="followed_id">
+        <input type = "submit" value= "seuraa">
+        </form>
+    {%endif%}    
+{%endfor%}
+<hr>
+<h2>Seuratut</h2>
+{%for fol in followed%}
+    {{fol.username}}
+
+
+
 
 {%endfor%}
-{{follows}}
 {% endblock %}

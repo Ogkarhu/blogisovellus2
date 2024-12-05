@@ -9,6 +9,7 @@ import posts
 import comments
 import new_comment
 import like
+import follows
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -30,7 +31,9 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        admin = request.form["admin"]
+        admin = request.form.get("admin")
+        if admin is None:
+            admin = False
         if password1 != password2:
             return render_template("error.html", message="Salasanat eroavat")
         if users.register(username, password1, admin):
@@ -58,10 +61,13 @@ def like_route():
     like.like()
     return redirect("/")
 
-@app.route("/follows")
+@app.route("/follows", methods =["GET","POST"])
 def follow_route():
     if request.method == "POST":
-        return redirect("/")
-    if request.method == "GET":
+        follows.follow()
         all_users = users.userlist()
-        return render_template("followed.html", users= all_users)
+        return redirect("/follows")
+    if request.method == "GET":
+        all_users = follows.not_followed()
+        followed = follows.followed()
+        return render_template("followed.html", users= all_users, followed= followed)
