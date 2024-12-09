@@ -26,9 +26,7 @@ def user_id():
     return session.get("user_id", 0)
 
 def logout():
-    session.pop("user_id", None)
-    session.pop("username", None)
-    session.pop("is_admin", None)
+    session = None
 
 def register(username, password, admin):
     hash_value = generate_password_hash(password)

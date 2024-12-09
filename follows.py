@@ -39,6 +39,6 @@ def not_followed():
 
 def follower():
     user = user_id()
-    sql = text("SELECT users.username FROM users LEFT JOIN follows ON follower_id = users.id WHERE follower_id = :user")
+    sql = text("SELECT users.username FROM users LEFT JOIN follows ON followed_id = users.id WHERE follower_id = :user")
     follower = db.session.execute(sql, {"user": user})
     return follower

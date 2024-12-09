@@ -13,8 +13,9 @@
 <hr> 
 
 <h1>Oma syöte</h1>
+
 {% for post in posts %}
-    {% if session.username in follower%}
+    {% if post.username in follower%}
         <!--displaying the date-->
         {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
         <!--displaying the user-->

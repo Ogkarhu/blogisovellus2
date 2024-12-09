@@ -52,10 +52,7 @@ def logout():
     users.logout()
     return render_template("login.html")
 
-@app.route("/new_comment")
-def new_comment_route():
-    new_comment.add_comment()
-    return render_template("/")
+
 @app.route("/like", methods =["POST"])
 def like_route():
     like.like()
@@ -75,8 +72,7 @@ def follow_route():
 @app.route("/own_feed")
 def own_feed():
     post_list= posts.get_list()
-    followed = list(map(lambda x:x[0],follows.followed()))
     follower = list(map(lambda x:x[0],follows.follower()))
     all_users = users.userlist
-    return render_template("own_feed.html", posts = post_list, all_users = all_users, follows = followed, follower = follower )
-    
+    post_list = [p for p in post_list if p.username in follower]
+    return render_template("own_feed.html", posts = post_list, all_users = all_users, follower = follower )

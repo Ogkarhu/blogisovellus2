@@ -8,6 +8,8 @@ from sqlalchemy.sql import text
 
 @app.route("/new_comment", methods=["POST", "GET"])
 def add_comment():
+    if not session:
+        return redirect("/login")
     if request.method == "GET":
         return render_template("/")
     if request.method == "POST":

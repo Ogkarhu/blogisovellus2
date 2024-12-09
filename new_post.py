@@ -8,6 +8,8 @@ from sqlalchemy.sql import text
 
 @app.route("/new_post", methods=["POST", "GET"])
 def add_video():
+    if not session:
+        return redirect("/login")
     if request.method == "GET":
         return render_template("new_post.html")
     
