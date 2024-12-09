@@ -71,3 +71,12 @@ def follow_route():
         all_users = follows.not_followed()
         followed = follows.followed()
         return render_template("followed.html", users= all_users, followed= followed)
+    
+@app.route("/own_feed")
+def own_feed():
+    post_list= posts.get_list()
+    followed = list(map(lambda x:x[0],follows.followed()))
+    follower = list(map(lambda x:x[0],follows.follower()))
+    all_users = users.userlist
+    return render_template("own_feed.html", posts = post_list, all_users = all_users, follows = followed, follower = follower )
+    

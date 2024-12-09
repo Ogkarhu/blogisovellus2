@@ -7,11 +7,12 @@
     {% if session.is_admin == True %}
     <a href="/new_post">Lisää video</a>
     {% endif %}
+    <a href="/own_feed">Oma syöte</a>
     <a href="/follows">Käyttäjät</a>
     <a href="/logout">Kirjaudu ulos</a>
 
 <hr>
-
+<h1>Etusivu</h1>
 {% for post in posts %}
     <!--displaying the date-->
     {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -

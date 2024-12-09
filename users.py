@@ -27,6 +27,7 @@ def user_id():
 
 def logout():
     session.pop("user_id", None)
+    session.pop("username", None)
     session.pop("is_admin", None)
 
 def register(username, password, admin):

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %}Oma syöte{% endblock %}
+{% block content %}
+<hr>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+    {% if session.is_admin == True %}
+    <a href="/new_post">Lisää video</a>
+    {% endif %}
+    <a href="/follows">Käyttäjät</a>
+    <a href="/logout">Kirjaudu ulos</a>
+
+<hr> 
+
+<h1>Oma syöte</h1>
+{% for post in posts %}
+    {% if session.username in follower%}
+        <!--displaying the date-->
+        {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
+        <!--displaying the user-->
+        Posted by {{post.username}}
+        <br>
+        Pidän!:<form action="/like" method="POST">
+            <input type="hidden" value="{{post[0]}}" name = "post_id"/>
+            <input type="submit" value="{{post.likes}}" />
+        </form>
+        <!--embedding video-->
+        {% if post.youtube_url %}
+            <iframe width="560" height="315"
+                src="{{ post.youtube_url }}"
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+        {% endif %}
+
+        <p>{{ post.body}}</p>
+        <br>
+        <form action="/new_comment" method="POST">
+            <input type="hidden" value="{{post[0]}}" name = "post_id"/>
+            <textarea name="comment" rows="2" cols="40"></textarea>
+            <input type="submit" value="Lähetä">
+        </form>
+        {%for comment in post.comments %}
+            {{comment[1]}}
+            <br>
+        {%endfor%}
+    {%else%}
+        Et seuraa ketään, tai seuraamasi käyttäjät eivät ole lisänneet videoita <a href="/follows">Käyttäjät</a>
+    {%endif%}
+    
+    <hr>
+{% endfor %}
+
+    
+{% else %}
+<a href="{{ url_for('login') }}">Kirjautuminen</a>
+{% endif %}
+
+{% endblock %}
