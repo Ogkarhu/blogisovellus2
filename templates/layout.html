@@ -1,12 +1,19 @@
-<!doctype html>
-<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<body>
-<title>Blogisovellus- {% block title %}{% endblock %}</title>
-<h1>Blogisovellus</h1>
-<a href="/">Etusivu</a>
-<hr>
-{% block content %}{% endblock %}
-<hr>
+<!DOCTYPE html>
 
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blogisovellus- {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div class ="pavement">
+    <header>
+        <h1>Blogisovellus</h1>
+        <a href="/">Etusivu</a>
+    </header>
+    <hr>
+    {% block content %}{% endblock %}
+    <hr>
+    </div>
 </body>

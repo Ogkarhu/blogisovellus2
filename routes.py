@@ -85,7 +85,7 @@ def own_feed():
     follower = list(map(lambda x:x[0],follows.followed()))
     all_users = users.userlist
     post_list = [p for p in post_list if p.username in follower]
-    return render_template("own_feed.html", posts = post_list, all_users = all_users, follower = follower )
+    return render_template("index.html", own_feed = True, posts = post_list, all_users = all_users, follower = follower )
 
 @app.route("/new_comment", methods=["POST", "GET"])
 def add_comment():
@@ -97,14 +97,13 @@ def add_comment():
         utils.csrf()
         post_id = request.form["post_id"]
         comment = request.form["comment"]
-        print(request.form)
-
-
-
+        if comment.strip() == "":
+            return render_template("error.html", message = "viesti ei voi olla tyhjä")
+        else:
         # Insert post (comment and YouTube link) into the database
-        query = text("INSERT INTO comments (user_id, comment, post_id) VALUES (:user_id, :comment, :post_id)")
-        db.session.execute(query, {"user_id": session["user_id"], "comment": comment, "post_id": post_id})
-        db.session.commit()
+            query = text("INSERT INTO comments (user_id, comment, post_id) VALUES (:user_id, :comment, :post_id)")
+            db.session.execute(query, {"user_id": session["user_id"], "comment": comment, "post_id": post_id})
+            db.session.commit()
 
         return redirect(request.referrer)
     

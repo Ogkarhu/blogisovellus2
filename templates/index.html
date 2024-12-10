@@ -1,52 +1,57 @@
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
 {% block content %}
-<hr>
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<nav>
+    <p>Olet kirjautunut nimellä <span class="username">{{ session.username }}</span></p>
     {% if session.is_admin == True %}
     <a href="/new_post">Lisää video</a>
     {% endif %}
     <a href="/own_feed">Oma syöte</a>
     <a href="/follows">Käyttäjät</a>
     <a href="/logout">Kirjaudu ulos</a>
-
-<hr>
+</nav>
+{%if own_feed%}
+<h1>Oma syöte</h1>
+{%else%}
 <h1>Etusivu</h1>
+{%endif%}
 {% for post in posts %}
-    <!--displaying the date-->
-    {{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }} -
-    <!--displaying the user-->
-    Posted by {{post.username}}
-    <br>
-    Pidän!:<form action="/like" method="POST">
-        <input type="hidden" value="{{post[0]}}" name = "post_id"/>
-        <input type="submit" value="{{post.likes}}" />
-    </form>
-    <!--embedding video-->
-    {% if post.youtube_url %}
-        <iframe width="560" height="315"
-            src="{{ post.youtube_url }}"
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
-    {% endif %}
+<!--displaying the user-->
+Posted by {{post.username}}
+<br>
+<!--displaying the date-->
+{{ post.created_at.strftime('%d-%m-%Y %H:%M') }}
+<br>
 
-    <p>{{ post.body}}</p>
-    <br>
-    <form action="/new_comment" method="POST">
-        <input type="hidden" value="{{post[0]}}" name = "post_id"/>
-        <textarea name="comment" rows="2" cols="40"></textarea>
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        <input class="btn-primary" type="submit" value="Lähetä">
-    </form>
-    {%for comment in post.comments %}
-        {{comment[2]}} | {{comment[1]}}
-        <br>
-    {% endfor %}
-    <hr>
+<!--embedding video-->
+{% if post.youtube_url %}
+<iframe width="560" height="315" src="{{ post.youtube_url }}" frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<br>
+{% endif %}
+<form class = "like" action="/like" method="POST">
+<input type="hidden" value="{{post[0]}}" name="post_id" />
+<input type="submit" value="    nautiskelijat {{post.likes}}    " />
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<h4>kuvaus:</h4>
+<p>{{ post.body}}</p>
+<br>
+<form class="new_comment" action="/new_comment" method="POST">
+    <input type="hidden" value="{{post[0]}}" name="post_id" />
+    <textarea name="comment" rows="2" cols="40"></textarea>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="submit" value="Lähetä">
+</form>
+{%for comment in post.comments %}
+<div class="commentlayout">
+    <span class="username">{{comment[2]}}</span> <span>|</span>
+    <div class="comment_text">{{comment[1]}}</div>
+</div>
 {% endfor %}
-
-    
+{% endfor %}
 {% else %}
 <a href="{{ url_for('login') }}">Kirjautuminen</a>
 {% endif %}
