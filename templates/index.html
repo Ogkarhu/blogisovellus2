@@ -37,7 +37,7 @@
         <input type="hidden" value="{{post[0]}}" name = "post_id"/>
         <textarea name="comment" rows="2" cols="40"></textarea>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        <input type="submit" value="Lähetä">
+        <input class="btn-primary" type="submit" value="Lähetä">
     </form>
     {%for comment in post.comments %}
         {{comment[2]}} | {{comment[1]}}
