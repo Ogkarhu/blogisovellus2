@@ -15,8 +15,13 @@
 {%endfor%}
 <hr>
 <h2>Seuratut</h2>
-{%for fol in followed%}
-    {{fol.username}}
+{%for user in followed%}
+    {{user.username}}
+    <form action="/follows" method="POST">
+        <input type = "hidden" value="{{user.username}}" name="username">
+        <input type = "hidden" value="{{user.id}}" name="followed_id">
+        <input type = "submit" value= "lopeta seuraaminen">
+        </form>
 
 
 

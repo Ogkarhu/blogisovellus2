@@ -24,7 +24,7 @@ def like():
             db.session.execute(query, {"user_id": session["user_id"], "post_id": post_id})
             db.session.commit()
 
-        return redirect("/")
+        return redirect(request.referrer)
     
 def get_like():
     sql = text("""SELECT P.id,

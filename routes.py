@@ -56,11 +56,12 @@ def logout():
 @app.route("/like", methods =["POST"])
 def like_route():
     like.like()
-    return redirect("/")
+    return redirect(request.referrer)
 
 @app.route("/follows", methods =["GET","POST"])
 def follow_route():
     if request.method == "POST":
+        print(request.form)
         follows.follow()
         all_users = users.userlist()
         return redirect("/follows")
@@ -72,7 +73,7 @@ def follow_route():
 @app.route("/own_feed")
 def own_feed():
     post_list= posts.get_list()
-    follower = list(map(lambda x:x[0],follows.follower()))
+    follower = list(map(lambda x:x[0],follows.followed()))
     all_users = users.userlist
     post_list = [p for p in post_list if p.username in follower]
     return render_template("own_feed.html", posts = post_list, all_users = all_users, follower = follower )

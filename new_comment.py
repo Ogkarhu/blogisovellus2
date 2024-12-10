@@ -24,4 +24,4 @@ def add_comment():
         db.session.execute(query, {"user_id": session["user_id"], "comment": comment, "post_id": post_id})
         db.session.commit()
 
-        return redirect("/")
+        return redirect(request.referrer)
