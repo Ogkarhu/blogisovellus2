@@ -1,13 +1,13 @@
 from flask import Flask
+from sqlalchemy.sql import text
 from app import app
+from db import db
 from flask import render_template, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 import users
-import new_post
 import posts
 import comments
-import new_comment
 import like
 import follows
 
@@ -77,3 +77,54 @@ def own_feed():
     all_users = users.userlist
     post_list = [p for p in post_list if p.username in follower]
     return render_template("own_feed.html", posts = post_list, all_users = all_users, follower = follower )
+
+@app.route("/new_comment", methods=["POST", "GET"])
+def add_comment():
+    if not session:
+        return redirect("/login")
+    if request.method == "GET":
+        return render_template("/")
+    if request.method == "POST":
+        post_id = request.form["post_id"]
+        comment = request.form["comment"]
+        print(request.form)
+
+
+
+        # Insert post (comment and YouTube link) into the database
+        query = text("INSERT INTO comments (user_id, comment, post_id) VALUES (:user_id, :comment, :post_id)")
+        db.session.execute(query, {"user_id": session["user_id"], "comment": comment, "post_id": post_id})
+        db.session.commit()
+
+        return redirect(request.referrer)
+    
+@app.route("/new_post", methods=["POST", "GET"])
+def add_video():
+    if not session:
+        return redirect("/login")
+    if request.method == "GET":
+        return render_template("new_post.html")
+    
+    content = request.form["content"]
+    link = request.form.get("link", "")
+
+    youtube_url = None
+
+    if "youtube.com/watch?v=" in link:
+        index = link.find("v=") + 2
+        endindex = link.find("&", index)
+        unique = link[index:endindex] if endindex != -1 else link[index:]
+        youtube_url = f"https://www.youtube.com/embed/{unique}"
+    elif "youtu.be/" in link:
+        # Extract video ID
+        unique = link.split("youtu.be/")[1]
+        youtube_url = f"https://www.youtube.com/embed/{unique}"
+    else:
+        return redirect("/")
+
+    # Insert post (comment and YouTube link) into the database
+    query = text("INSERT INTO posts (user_id, body, youtube_url) VALUES (:user_id, :content, :youtube_url)")
+    db.session.execute(query, {"user_id": session["user_id"], "content": content, "youtube_url": youtube_url})
+    db.session.commit()
+
+    return redirect("/")
