@@ -10,6 +10,7 @@
         <input type = "hidden" value="{{user.username}}" name="username">
         <input type = "hidden" value="{{user.id}}" name="followed_id">
         <input type = "submit" value= "seuraa">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
     {%endif%}    
 {%endfor%}
@@ -21,6 +22,7 @@
         <input type = "hidden" value="{{user.username}}" name="username">
         <input type = "hidden" value="{{user.id}}" name="followed_id">
         <input type = "submit" value= "lopeta seuraaminen">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
 
 

@@ -10,6 +10,7 @@ import posts
 import comments
 import like
 import follows
+import utils
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -49,18 +50,26 @@ def index():
 
 @app.route("/logout")
 def logout():
+    if not session:
+        return redirect("/login")
     users.logout()
     return render_template("login.html")
 
 
 @app.route("/like", methods =["POST"])
 def like_route():
+    if not session:
+        return redirect("/login")
+    utils.csrf()
     like.like()
     return redirect(request.referrer)
 
 @app.route("/follows", methods =["GET","POST"])
 def follow_route():
+    if not session:
+        return redirect("/login")
     if request.method == "POST":
+        utils.csrf()
         print(request.form)
         follows.follow()
         all_users = users.userlist()
@@ -85,6 +94,7 @@ def add_comment():
     if request.method == "GET":
         return render_template("/")
     if request.method == "POST":
+        utils.csrf()
         post_id = request.form["post_id"]
         comment = request.form["comment"]
         print(request.form)

@@ -5,6 +5,7 @@ from db import db
 from app import app
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
+import secrets
 
 
 def login(username, password):
@@ -18,6 +19,7 @@ def login(username, password):
             session["user_id"] = user.id
             session["username"] = username
             session["is_admin"] = user.is_admin
+            session["csrf_token"] = secrets.token_hex(16)
             return True
         else:
             return False

@@ -12,10 +12,11 @@ def get_list():
              U.username,
              U.id,
              (SELECT count(*) FROM likes WHERE post_id=P.id) AS likes,
-             ARRAY_AGG(array[C.id::varchar(255), C.comment]) AS comments
+             ARRAY_AGG(array[C.id::varchar(255), C.comment,U2.username]) AS comments
              FROM posts AS P
              JOIN users AS U ON P.user_id = U.id
              LEFT JOIN comments AS C ON C.post_id=P.id
+             JOIN users as U2 ON U2.id = C.user_id
              WHERE P.user_id=U.id
              GROUP BY P.id, U.username, U.id
              ORDER BY P.id
