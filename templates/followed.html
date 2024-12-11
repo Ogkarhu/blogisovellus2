@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block title %}Seuratut{% endblock %}
 {% block content %}
 <h2>Seuraa näitä blogaajia</h2>
@@ -29,4 +30,14 @@
 
 
 {%endfor%}
+<nav>
+    <p>Olet kirjautunut nimellä <span class="username">{{ session.username }}</span></p>
+    {% if session.is_admin == True %}
+    <a href="/new_post">lisää video</a>
+    {% endif %}
+    <a href="/">etusivu</a>
+    <a href="/own_feed">oma syöte</a>
+    <a href="/follows">käyttäjät</a>
+    <a href="/logout">kirjaudu ulos</a>
+</nav>
 {% endblock %}
