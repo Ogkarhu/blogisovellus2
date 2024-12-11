@@ -7,6 +7,7 @@
     {% if session.is_admin == True %}
     <a href="/new_post">lisää video</a>
     {% endif %}
+    <a href="/">etusivu</a>
     <a href="/own_feed">oma syöte</a>
     <a href="/follows">käyttäjät</a>
     <a href="/logout">kirjaudu ulos</a>
@@ -17,13 +18,13 @@
 <h1>Etusivu</h1>
 {%endif%}
 {% for post in posts %}
-<!--displaying the user-->
-Posted by {{post.username}}
-<br>
-<!--displaying the date-->
-{{ post.created_at.strftime('%d-%m-%Y %H:%M') }}
-<br>
-
+<p class="infobox">
+    <!--displaying the user-->
+    Posted by {{post.username}}
+    <br>
+    <!--displaying the date-->
+    {{ post.created_at.strftime('%d-%m-%Y %H:%M') }}
+</p>
 <!--embedding video-->
 {% if post.youtube_url %}
 <iframe width="560" height="315" src="{{ post.youtube_url }}" frameborder="0"

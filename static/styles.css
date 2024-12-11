@@ -133,6 +133,13 @@ title{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.infobox{
+    width: 200px;
+    border-top: #f9cf2e 5px dotted;
+    border-right: #f9cf2e 5px dotted;
+    margin-bottom: 0;
+}
+
 body {
     
     margin: auto;
