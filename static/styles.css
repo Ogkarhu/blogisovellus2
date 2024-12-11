@@ -11,14 +11,21 @@ img{
     height: 40px;    
 }
 
-.separator{
+div.separator{
     display: flex;
     justify-content: center;
-    border-image: url(/static/rubber-duck.png);
-    border-image-repeat: repeat;
-    border-top: 10px;
+    border-image: url(/static/rubber-duck.png) 50px repeat;
+    height: 20px;
+    background-color: #d8f342;
 }
 
+
+.borderimg3 {
+    border-top: 40px solid transparent;
+    padding: 15px;
+    border-image: url(/static/rubber-duck.png) 100% 1 repeat;
+
+  }
 
 header {
     background: #f9cf2e;
