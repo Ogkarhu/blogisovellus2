@@ -5,11 +5,11 @@
 <nav>
     <p>Olet kirjautunut nimellä <span class="username">{{ session.username }}</span></p>
     {% if session.is_admin == True %}
-    <a href="/new_post">Lisää video</a>
+    <a href="/new_post">lisää video</a>
     {% endif %}
-    <a href="/own_feed">Oma syöte</a>
-    <a href="/follows">Käyttäjät</a>
-    <a href="/logout">Kirjaudu ulos</a>
+    <a href="/own_feed">oma syöte</a>
+    <a href="/follows">käyttäjät</a>
+    <a href="/logout">kirjaudu ulos</a>
 </nav>
 {%if own_feed%}
 <h1>Oma syöte</h1>
@@ -27,21 +27,21 @@ Posted by {{post.username}}
 <!--embedding video-->
 {% if post.youtube_url %}
 <iframe width="560" height="315" src="{{ post.youtube_url }}" frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <br>
 {% endif %}
-<form class = "like" action="/like" method="POST">
-<input type="hidden" value="{{post[0]}}" name="post_id" />
-<input type="submit" value="    nautiskelijat {{post.likes}}    " />
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<form class="like" action="/like" method="POST">
+    <input type="hidden" value="{{post[0]}}" name="post_id" />
+    <input type="submit" value="    nautiskelijat {{post.likes}}    " />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 <h4>kuvaus:</h4>
 <p>{{ post.body}}</p>
 <br>
 <form class="new_comment" action="/new_comment" method="POST">
     <input type="hidden" value="{{post[0]}}" name="post_id" />
-    <textarea name="comment" rows="2" cols="40"></textarea>
+    <textarea placeholder="Kommentoi" name="comment" rows="2" cols="40"></textarea>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     <input type="submit" value="Lähetä">
 </form>
@@ -50,6 +50,8 @@ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; pic
     <span class="username">{{comment[2]}}</span> <span>|</span>
     <div class="comment_text">{{comment[1]}}</div>
 </div>
+{%else%}
+    Ei kommentteja
 {% endfor %}
 {% endfor %}
 {% else %}

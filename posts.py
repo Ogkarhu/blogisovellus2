@@ -16,7 +16,7 @@ def get_list():
              FROM posts AS P
              JOIN users AS U ON P.user_id = U.id
              LEFT JOIN comments AS C ON C.post_id=P.id
-             JOIN users as U2 ON U2.id = C.user_id
+             LEFT JOIN users as U2 ON U2.id = C.user_id
              WHERE P.user_id=U.id
              GROUP BY P.id, U.username, U.id
              ORDER BY P.id
